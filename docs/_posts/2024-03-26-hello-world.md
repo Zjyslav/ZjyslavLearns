@@ -2,6 +2,8 @@
 layout: post
 title: Hello World!
 date: 2024-03-26 12:20 +0100
+description: An introduction
+github-link:
 ---
 
 Hi, everyone. I'm Zjyslav. For 8 years I worked as an accountant and last year I made a move to change careers and become a C#/.NET developer. This change means learning a lot of new stuff.
