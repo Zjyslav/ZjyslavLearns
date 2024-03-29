@@ -6,7 +6,10 @@ using OptionsPatternDemo.Options;
 var builder = Host.CreateApplicationBuilder();
 
 builder.Services.AddSingleton<App>();
-builder.Services.Configure<AnimalOptions>(builder.Configuration.GetSection(nameof(AnimalOptions)));
+builder.Services
+    .AddOptions<AnimalOptions>()
+    .Bind(builder.Configuration.GetSection(nameof(AnimalOptions)))
+    .ValidateDataAnnotations();
 
 var host = builder.Build();
 
