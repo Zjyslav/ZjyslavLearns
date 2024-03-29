@@ -96,4 +96,123 @@ public App(IOptions<AnimalOptions> options)
 
 Please note that `IOptions<AnimalOptions>` is just a wrapper and the `AnimalOptions` object I care about is its `Value` property.
 
+## Validation
+
+Options values binded this way behave similarly to the values obtained via `IConfiguration` the way I described before:
+
+- lack of value in configuration means default value in options
+- value that cannot be converted into the type of property throws an exception
+
+Exception being thrown on type mismatch is a correct behaviour, as far as I can tell, but getting type's default value can be not exactly what you want.  
+If you wanted to check if an `int` value was specified or not, when 0 is a valid value, you could change the type to `int?` that defaults to `null`, but maybe it's not something you can or want to do for one reason or another.
+
+The bigger problem I see here, is that you need to put your validation logic when the values are used or maybe in the constructor after the options are injected.
+
+There is another way.
+
+First, let's add reference to `Microsoft.Extensions.Options.DataAnnotations` NuGet package.
+
+Then, we add data annotations (`using System.ComponentModel.DataAnnotations;`) to the properties of our options class to specify our requirements.
+
+```
+public class AnimalOptions
+{
+    [Required]
+    [StringLength(maximumLength: 25, MinimumLength = 1)]
+    public string Name { get; set; }
+
+    [Required]
+    [Range(minimum: 0, maximum: 1000)]
+    public int NumberOfLegs { get; set; }
+}
+```
+
+The last thing we need is to actually run the validation. For that, we need to use `ValidateDataAnnotations()` extension method. Unfortunatelly, it extends `OptionsBuilder<T>`, but when we configured options using `Configure<T>()`, it returned `IServiceCollection` object, so we cannot simply chain these methods.
+
+Luckily, there is another way of configuring options. It's a little more verbose, but we can use it in this situation.
+
+```
+builder.Services
+    .AddOptions<AnimalOptions>()
+    .Bind(builder.Configuration.GetSection(nameof(AnimalOptions)))
+    .ValidateDataAnnotations();
+```
+
+Now, if we don't specify a required property, or any value doesn't pass validation, an `OptionsValidationException` is thrown the moment the DI system tries to inject `IOptions` the first time.
+
+## Nested options
+
+In my example, the structure of options is flat. When I use `IConfiguration` directly, I don't shy away from using multiple layers of sections, but I don't particularly like to do it with options.
+
+The way to do it, is to create a separate class for a subsection and use it as a type for a property. I added `FoodPreferences` to my `AnimalOptions`
+
+`appsettings.json`:
+
+```
+{
+  "AnimalOptions": {
+    "Name": "Moose",
+    "NumberOfLegs": 4,
+    "FoodPreferences": {
+      "Plants": true,
+      "Meat": false
+    }
+  }
+}
+```
+
+`FoodPreferences.cs`:
+
+```
+public class FoodPreferences
+{
+    public bool Plants { get; set; }
+    public bool Meat { get; set; }
+}
+```
+
+`AnimalOptions.cs`
+
+```
+public class AnimalOptions
+{
+    [Required]
+    [StringLength(maximumLength: 25, MinimumLength = 1)]
+    public string Name { get; set; }
+
+    [Required]
+    [Range(minimum: 0, maximum: 1000)]
+    public int NumberOfLegs { get; set; }
+
+    [Required]
+    public FoodPreferences FoodPreferences { get; set; }
+}
+```
+
+Food preferences are required, so validation requires all its fields be provided and the fact they are `bool` type, they must be either `true` or `false` or they cannot get converted.
+
+However, if I add following property to `FoodPreferences`:
+
+```
+[Required]
+[StringLength(maximumLength: 25, MinimumLength = 1)]
+public string FavouriteFood { get; set; }
+```
+
+and then not provide a value for it in `appsettings.json`, I don't get an error. I get a null string.
+
+You have to be careful with nesting and validation.  
+If the extent of your validation is checking if a value of type that cannot be null is provided, you might be safe.  
+If you need to do some check on a value, it works only for the root of your configuration section.  
+There are [ways][nested-validation] to enable such validation of nested options, but they are beyond scope of this post. I'd suggest keeping it simple and sticking with default functionality until you really need to go more complex.
+
+## Summary
+
+Overall, I believe that Options Pattern is a good way to make your code a bit more _clean_.
+
+It makes your configuration strongly typed, enables validation on a higher level (in DI, instead of service) and makes your service's dependencies clearer - you know exactly what section of configuration the class depends on without having to search for any uses of `IConfiguration` in the code.
+
+I will be more open to use this pattern in the future. It adds complexity (as any pattern does), but it has its benefits (as any _good_ pattern does), so it's a trade-off, but I believe the complexity cost is low enough to seriously consider it in most situations.
+
 [microsoft-documentation] : https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-8
+[nested-validation] : https://stackoverflow.com/questions/77036980/how-to-validate-a-c-sharp-nested-options-class
