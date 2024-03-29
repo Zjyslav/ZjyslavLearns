@@ -1,6 +1,9 @@
 ---
 layout: post
 title: Options Pattern
+date: 2024-03-29 13:27 +0100
+description: An alternative to IConfiguration
+github-link: https://github.com/Zjyslav/ZjyslavLearns/tree/main/src/Options%20Pattern/OptionsPatternDemoApp
 ---
 
 I love using .NET's configuration system.
@@ -32,7 +35,7 @@ In a way. It's certainly not the only answer. For me, exploring this alternative
 
 # How do I use Options Pattern?
 
-It won't be a deep dive into all the ways you could use the Options Pattern. Please, reference [Microsoft's documentation][microsoft-documentation] on the topic like I did, if you're not satisfied with my example.
+It won't be a deep dive into all the ways you could use the Options Pattern. Please, reference [Microsoft's documentation](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-8) on the topic like I did, if you're not satisfied with my example.
 
 ## Create a class for your options
 
@@ -204,7 +207,7 @@ and then not provide a value for it in `appsettings.json`, I don't get an error.
 You have to be careful with nesting and validation.  
 If the extent of your validation is checking if a value of type that cannot be null is provided, you might be safe.  
 If you need to do some check on a value, it works only for the root of your configuration section.  
-There are [ways][nested-validation] to enable such validation of nested options, but they are beyond scope of this post. I'd suggest keeping it simple and sticking with default functionality until you really need to go more complex.
+There are [ways](https://stackoverflow.com/questions/77036980/how-to-validate-a-c-sharp-nested-options-class) to enable such validation of nested options, but they are beyond scope of this post. I'd suggest keeping it simple and sticking with default functionality until you really need to go more complex.
 
 ## Summary
 
@@ -213,6 +216,3 @@ Overall, I believe that Options Pattern is a good way to make your code a bit mo
 It makes your configuration strongly typed, enables validation on a higher level (in DI, instead of service) and makes your service's dependencies clearer - you know exactly what section of configuration the class depends on without having to search for any uses of `IConfiguration` in the code.
 
 I will be more open to use this pattern in the future. It adds complexity (as any pattern does), but it has its benefits (as any _good_ pattern does), so it's a trade-off, but I believe the complexity cost is low enough to seriously consider it in most situations.
-
-[microsoft-documentation] : https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-8
-[nested-validation] : https://stackoverflow.com/questions/77036980/how-to-validate-a-c-sharp-nested-options-class
