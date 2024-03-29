@@ -10,4 +10,7 @@ public class AnimalOptions
     [Required]
     [Range(minimum: 0, maximum: 1000)]
     public int NumberOfLegs { get; set; }
+
+    [Required]
+    public FoodPreferences FoodPreferences { get; set; }
 }
