@@ -3,7 +3,7 @@ layout: post
 title: Memory-mapped file
 date: 2024-04-02 12:57 +0200
 description: Also, Mutex
-github-link:
+github-link: https://github.com/Zjyslav/ZjyslavLearns/tree/main/src/Memory-mapped%20file/MemoryMappedFileDemo
 ---
 
 I recently learned of the concept of [Memory-mapped File](https://en.wikipedia.org/wiki/Memory-mapped_file). Wikipedia explains it better than I ever could, but it's the act of, as the name suggests, mapping a file onto a section of memory, so that a program interacts with it in memory, which is typically easier and faster than reading from and writing to disc. When the program finishes intracting with the file, all the changes are applied to the file in mass storage.
