@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34714.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryMappedFileDemo.Sender", "MemoryMappedFileDemo.Sender\MemoryMappedFileDemo.Sender.csproj", "{CCACE088-9811-4A96-9990-49567DB246BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryMappedFile.Receiver", "MemoryMappedFile.Receiver\MemoryMappedFile.Receiver.csproj", "{A0D1F2C4-B62C-4DB1-8D6C-E1D34C2ED1BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCACE088-9811-4A96-9990-49567DB246BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCACE088-9811-4A96-9990-49567DB246BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCACE088-9811-4A96-9990-49567DB246BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCACE088-9811-4A96-9990-49567DB246BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0D1F2C4-B62C-4DB1-8D6C-E1D34C2ED1BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0D1F2C4-B62C-4DB1-8D6C-E1D34C2ED1BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0D1F2C4-B62C-4DB1-8D6C-E1D34C2ED1BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0D1F2C4-B62C-4DB1-8D6C-E1D34C2ED1BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {39F44EF1-BB19-4764-A11F-01FDD7B494CC}
+	EndGlobalSection
+EndGlobal
