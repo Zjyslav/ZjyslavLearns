@@ -18,7 +18,7 @@ It turns out, there are two distinct types of MMFs:
 - Persisted memory-mapped files
 - Non-persisted memory-mapped files
 
-**Persosted MMFs** are basically what I imagined it would look like - you open a file, work with it in memory and close it when you're done, changes are saved to file.
+**Persisted MMFs** are basically what I imagined it would look like - you open a file, work with it in memory and close it when you're done, changes are saved to file.
 
 I was actually more interested in **Non-persisted MMFs**. They work the same, but there is actually no file, just some space in memory.
 
