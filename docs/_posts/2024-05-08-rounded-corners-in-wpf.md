@@ -2,7 +2,7 @@
 layout: post
 title: Rounded corners in WPF
 description: My way of cutting corners
-github-link:
+github-link: https://github.com/Zjyslav/ZjyslavLearns/tree/main/src/Rounded-Corners-In-WPF
 date: 2024-05-08 13:33 +0200
 ---
 
