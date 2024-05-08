@@ -1,0 +1,30 @@
+﻿<Window x:Class="RoundedCornersInWpf.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RoundedCornersInWpf.Wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" FontSize="50">
+    <Grid Background="DarkSlateBlue">
+        
+        <Grid Margin="100">
+            <Grid.OpacityMask>
+                <VisualBrush Visual="{Binding ElementName=cornerRounder}" Stretch="None"/>
+            </Grid.OpacityMask>
+            <Border x:Name="cornerRounder"
+                    Background="White"
+                    CornerRadius="20"/>
+            <ScrollViewer VerticalScrollBarVisibility="Visible" Background="White">
+                <Button Margin="50">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="25"/>
+                        </Style>
+                    </Button.Resources>
+                    Click Me!
+                </Button>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Window>
