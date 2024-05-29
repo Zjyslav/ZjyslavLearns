@@ -1,15 +1,78 @@
+body {
+  background-image: linear-gradient(
+    90deg,
+    white,
+    rgba(144, 0, 255, 0.2),
+    rgba(212, 154, 20, 0.2),
+    white
+  );
+}
+
+.main-content {
+  padding: 2rem;
+  background-color: rgb(253, 253, 253);
+  max-width: 80rem;
+}
+
+.page-header {
+  background-color: #5b21ae;
+  background-image: linear-gradient(90deg, #5b21ae, #d49a14);
+  padding-top: 4rem;
+  padding-bottom: 2rem;
+}
+
+.main-content h1,
+.main-content h2,
+.main-content h3,
+.main-content h4,
+.main-content h5,
+.main-content h6 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: normal;
+  color: #5b21ae;
+}
+
+a {
+  color: #5b21ae;
+}
+
 .post-list-heading {
   text-align: center;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
 }
 
 .post-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-list li {
+  border-radius: 1rem;
+  margin: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  background-color: white;
+  text-align: center;
+}
+
+.post-list h3 {
+  margin-top: 0.25rem;
+  margin-bottom: 0;
 }
 
 .post-meta {
 }
 
 .post-link {
+  font-size: 1.5rem;
 }
 
 .rss-subscribe {
+  margin-top: 3rem;
+  text-align: right;
 }
