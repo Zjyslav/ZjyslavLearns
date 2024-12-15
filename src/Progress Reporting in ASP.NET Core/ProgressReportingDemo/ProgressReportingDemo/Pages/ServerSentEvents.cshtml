@@ -1,0 +1,33 @@
+﻿@page
+@model ProgressReportingDemo.Pages.ServerSentEventsModel
+@{
+    ViewBag.Title = "Progress Reporting Demo - Server-Sent Events";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<p>Progress: <strong id="percentage">0%</strong></p>
+<progress id="progress-bar" value="0" max="100"></progress>
+<p>Last update: <strong id="last-update"></strong></p>
+
+<a asp-page="/Index">Back</a>
+
+@section Scripts {
+    <script>
+        const percentageElement = document.getElementById("percentage");
+        const progressBarElement = document.getElementById("progress-bar");
+        const lastUpdateElement = document.getElementById("last-update");
+
+        const eventSource = new EventSource("/ServerSentEvents/Progress");
+
+        eventSource.onmessage = function (event) {
+            console.log("Server-Sent Event received:", event.data);
+
+            const progressReport = JSON.parse(event.data);
+
+            percentageElement.textContent = progressReport.Percentage + "%";
+            progressBarElement.value = progressReport.Percentage;
+            lastUpdateElement.textContent = new Date(progressReport.TimeStamp).toLocaleString();
+        };
+    </script>
+}

@@ -1,0 +1,53 @@
+﻿@page
+@model ProgressReportingDemo.Pages.ServerSentEventsModel
+@{
+    ViewBag.Title = "Progress Reporting Demo - API Endpoint";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<p>Progress: <strong id="percentage">0%</strong></p>
+<progress id="progress-bar" value="0" max="100"></progress>
+<p>Last update: <strong id="last-update"></strong></p>
+
+<a asp-page="/Index">Back</a>
+
+@section Scripts {
+    <script>
+        const percentageElement = document.getElementById("percentage");
+        const progressBarElement = document.getElementById("progress-bar");
+        const lastUpdateElement = document.getElementById("last-update");
+
+        const updateInterval = 500;
+
+        startPeriodicExecution(updateProgress, updateInterval);
+
+        function startPeriodicExecution(func, period)
+        {
+            setTimeout(async () => {
+                const continueExecution = await func();
+                if (continueExecution) {
+                    setInterval(func, period);
+                }
+            }, period);
+        }
+
+        async function updateProgress() {
+            const response = await fetch('/Api/Progress');
+
+            if (!response.ok) {
+                console.error('Failed to fetch progress:', response);
+                return false;
+            }
+
+            const progressReport = await response.json();
+
+            percentageElement.textContent = progressReport.percentage + "%";
+            progressBarElement.value = progressReport.percentage;
+            lastUpdateElement.textContent = new Date(progressReport.timeStamp).toLocaleString();
+
+            return true;
+        }
+
+    </script>
+}

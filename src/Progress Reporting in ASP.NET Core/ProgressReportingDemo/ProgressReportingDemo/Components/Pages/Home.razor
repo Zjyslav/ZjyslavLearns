@@ -1,0 +1,46 @@
+﻿@page "/Blazor"
+@using Microsoft.AspNetCore.Components.Server.Circuits
+@using ProgressReportingDemo.Services
+@inject LongRunningTaskProgressService ProgressService
+@inject CancellationTokenSource CancellationTokenSource
+@inject ILogger<Home> Logger
+
+@{
+    var pageTitle = "Progress Reporting Demo - Blazor Server";
+}
+
+<PageTitle>@pageTitle</PageTitle>
+
+<h1>@pageTitle</h1>
+
+@if (_progressReport is not null)
+{
+    <p>Progress: <strong>@(_progressReport.Percentage)%</strong></p>
+    <progress value="@_progressReport.Percentage" max="100"></progress>
+    <p>Last update: <strong>@_progressReport.TimeStamp.LocalDateTime</strong></p>
+}
+else
+{
+    <p>Waiting for progress...</p>
+}
+
+<a href="/">Back</a>
+
+@code {
+    private ProgressReport? _progressReport;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Progress<ProgressReport> progress = new Progress<ProgressReport>(report =>
+            {
+                Logger.LogInformation("Progress report received.");
+                _progressReport = report;
+                StateHasChanged();
+            });
+
+            await ProgressService.MonitorProgress(progress, CancellationTokenSource.Token);
+        }
+    }
+}
