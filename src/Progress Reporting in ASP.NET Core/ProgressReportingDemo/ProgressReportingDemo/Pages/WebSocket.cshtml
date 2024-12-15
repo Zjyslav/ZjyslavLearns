@@ -1,0 +1,41 @@
+﻿@page
+@model ProgressReportingDemo.Pages.WebSocketModel
+@{
+    ViewBag.Title = "Progress Reporting Demo - WebSocket";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<p>Progress: <strong id="percentage">0%</strong></p>
+<progress id="progress-bar" value="0" max="100"></progress>
+<p>Last update: <strong id="last-update"></strong></p>
+
+<a asp-page="/Index">Back</a>
+
+@section Scripts {
+    <script>
+        const percentageElement = document.getElementById("percentage");
+        const progressBarElement = document.getElementById("progress-bar");
+        const lastUpdateElement = document.getElementById("last-update");
+
+        const socket = new WebSocket("wss://" + window.location.host + "/WebSocket/Progress");
+
+        socket.onopen = function (event) {
+            console.log("WebSocket opened.");
+        };
+
+        socket.onmessage = function (event) {
+            console.log("WebSocket message received:", event.data);
+
+            const progressReport = JSON.parse(event.data);
+
+            percentageElement.textContent = progressReport.Percentage + "%";
+            progressBarElement.value = progressReport.Percentage;
+            lastUpdateElement.textContent = new Date(progressReport.TimeStamp).toLocaleString();
+        };
+
+        socket.onclose = function (event) {
+            console.log("WebSocket closed.");
+        };
+    </script>
+}
