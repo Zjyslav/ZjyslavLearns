@@ -2,7 +2,7 @@
 layout: post
 title: Progress Reporting in ASP.NET Core
 description: How to display progress of a long-running task
-github-link:
+github-link: https://github.com/Zjyslav/ZjyslavLearns/tree/main/src/Progress%20Reporting%20in%20ASP.NET%20Core/ProgressReportingDemo
 date: 2024-12-15 15:14 +0100
 ---
 
